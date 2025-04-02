@@ -1,0 +1,269 @@
+\textbf{The Burkholder-Davis-Gundy Inequality (BDG)}
+Let $(M_t, \F_t), M_t = \int_0^t F_s \diff W_s$ with suitable integrable condition, be continuous local martingale. $\forall p \in [1, \infty), \exists c_p, C_p s.t.$
+\begin{equation*}
+   c_p \E\left( \int_0^T \norm{F_t}^2 \diff t \right)^\frac{p}{2} \leq \E\sup_{t\leq T} \abs{M_t}^p \leq C_p \E\left( \int_0^T \norm{F_t}^2 \diff t \right)^\frac{p}{2}.
+\end{equation*}
+
+\begin{rem}
+$\E\left( \int_0^T \norm{F_t}^2 \diff t \right)^\frac{p}{2} = \infty$ is allowed.
+\end{rem}
+\textbf{Doob's inequality} Now we provide a simpler version, namely for $d=1$, we assume $\E\int_0^T F_t^2  \diff t < \infty$. Now we have martingale. Then
+\begin{equation*}
+    \E\sup_{t\leq T} \abs{M_t}^2 \leq 4\E M_T^2.
+\end{equation*}
+
+\textbf{Gronwall inequality} Let $f:[0,T] \rightarrow [0,\infty)$ with $\int_0^T f(t) \diff t < \infty$ Assume that $\exists a,b\geq 0$ s.t.
+\begin{equation*}
+    f(t) \leq a + b\int_0^t f(s) \diff s \quad t\leq T,
+\end{equation*}
+then,
+\begin{equation*}
+    f(t) \leq a e^{bt} \leq  C a,
+\end{equation*}
+with constant $C = e^{bT}$.
+
+\begin{cor}
+If $f \geq 0$ and
+\begin{equation*}
+    f(t) \leq a(t) + \int_0^t b(s) f(s) \diff s, t\geq 0,
+\end{equation*} and $a$ is non-decreasing, then
+\begin{equation*}
+    f(t) \leq a(t) e^{\int_0^t b(s) \diff s}.
+\end{equation*}
+\end{cor}
+
+\newpage
+Here, I would like to provide a handbook for one can determine the existence and uniqueness of solutions of SDE in the form
+\begin{equation*}
+    \begin{cases}
+        \diff X_t = F(t, X_t) \diff t + G(t, X_t) \diff W_t,  \\
+        X_0 = x.
+    \end{cases}
+\end{equation*}
+We could possibly talk about four types solutions globally strong, globally weak, locally strong and locally weak. This type of questions we have talked previously but now I give a handy tool in exam or for problem solving.
+
+\noindent \textbf{Strong and Weak} From my point of view, weak solution is more flexible, we only care about the dynamics or distribution but not the exact probability space or Brownian motion. Strong solution is in some sense fixed.
+
+\noindent \textbf{General requirements}
+This is the part should be satisfied for all types of solutions.
+
+\noindent \textbf{Global strong solution}
+Given the probability space such that $(\Omega, \F, (\F_t)^W, \prob)$ and $(W_t, \F_t^W)$ is BM defined on $\Omega$ we say $X_t$ is a \textbf{Global Strong} solution to if
+\begin{itemize}
+    \item $X_t\in\F_t$ be adapted.
+    \item Integrals are well defined
+    \begin{equation*}
+        \int_0^T \abs{F(t, X_t)} \diff t < \infty \quad \int_0^T \abs{G(t, X_t)}^2 \diff t < \infty \quad a.s.
+    \end{equation*}
+    \item Both $F, G$ being \textbf{Lipschitz},
+\end{itemize}
+and finally, 
+\begin{equation*}
+    X_t = x + \int_s^t F(r,X_r) \diff r+\int_s^t G(r,X_r) \diff W_r \quad a.s.
+\end{equation*}
+
+\noindent \textbf{Local Strong solution}
+
+\begin{dfn}{\textbf{(Local Lipschitz)}}
+We say $F$ and $G$ are locally Lipschitz if $\forall n \geq 1, \quad \exists l_n$ s.t.
+\begin{equation*}
+    \abs{x}\leq n, \abs{y}\leq n \implies \abs{F(x) - F(y)} \leq l_n \abs{x-y} \quad \abs{G(x) - G(y)} \leq l_n \abs{x-y}.
+\end{equation*}
+\end{dfn}
+
+Given the probability space such that $(\Omega, \F, (\F_t)^W, \prob)$ and $(W_t, \F_t^W)$ is BM defined on $\Omega$ we say $X_t$ is a \textbf{Local strong} solution to if
+\begin{itemize}
+    \item $X_t\in\F_t$ be adapted.
+    \item Both $F, G$ being \textbf{Local Lipschitz}.
+    \item $\tau_n := \inf\{t \geq 0; \abs{X_t} \geq n\}$.
+    \item Integrability condition is satisfied $\int_0^{t\wedge \tau_n} \left(\abs{F(X_s)}+\abs{G(X_s)}^2 \diff s \right) <\infty$ and
+\begin{equation*}
+    X_t = x_0 + \int_0^{t\wedge \tau_n} F(X_s) \diff s + \int_0^{t\wedge \tau_n} G(X_s) \diff s\quad a.s.
+\end{equation*}
+\end{itemize}
+If we have linear growth rate, then we have global strong, that is $\tau = \infty$ a.s. Otherwise it is possible to have finite explosion time.
+
+\noindent \textbf{Weak solution Global or Local}
+\begin{dfn}
+Weak solution of the SDE up to an explosion time $\tau$ consist of
+\begin{itemize}
+    \item $(\Omega, \F, \prob), (\F_t)$ satisfies usual conditions.
+    \item $W_t \in \F_t$.
+    \item $X_t$ a continuous adapted process taking value in \textbf{extended real line $[-\infty, \infty]$}. and $\abs{X_0} < \infty$ a.s.
+    \item We define stopping time (boundedness) $\tau_n$ as 
+    \begin{equation*}
+        \tau_n := \inf\{t\geq0, \abs{X_t} \geq n\}.
+    \end{equation*}
+    \item integrability condition and solution representation
+    \begin{align*}
+        &\int_0^{t \wedge \tau_n} \left(\abs{F(X_s)} + \abs{G(X_s)}^2 \right)\diff s <\infty \\
+        &X_t = X_0 + \int_0^{t \wedge \tau_n} F(X_s) \diff s + \int_0^{t \wedge \tau_n} G(X_s) \diff W_s \quad a.s.
+    \end{align*}
+\end{itemize}
+\end{dfn}
+If $\tau = \infty$ we say the solution is global. If $\tau <\infty$ we forbid the situation of alternating between $-\infty$ to $\infty$. We are not interested in the solution in this form.
+
+\textbf{Existence and Uniqueness for Global Weak solution}
+Assume that 
+\begin{enumerate}
+    \item $G^2(x) > 0 \quad \forall x\in \R$.
+    \item $\forall x \in \R, \exists \epsilon >0$ s.t. \begin{equation*}
+        \int_{x-\epsilon}^{x+\epsilon} \frac{\abs{F(y)}}{G^2(y)} \diff y < \infty,  
+    \end{equation*}
+\end{enumerate}
+and $\forall x \in \R, \exists \epsilon >0$ s.t.
+\begin{equation*}
+    \int_{x-\epsilon}^{x+\epsilon} \frac{1}{G^2(y)} \diff y = \infty.
+\end{equation*}
+Then there exists a unique non-exploding $\tau = \infty$ solution for every $X_0$.
+
+\noindent Fix $c\in I$ (the interval $I = (l, r)$ is the interested range for particular problem)
+\begin{itemize}
+    \item Scale function
+        \begin{equation*}
+            p(x) = \int_c^x \exp\left(-2 \int_c^r \frac{F(z)}{G^2(z)} \diff z \right) \diff r.
+        \end{equation*}
+    \item Speed measure
+        \begin{equation*}
+            m(\diff x) = \frac{2}{p'(x) G^2(x)} \diff x.
+        \end{equation*}
+    \item The function $v$
+        \begin{equation*}
+            v(x) = \int_c^x (p(x)- p(y)) m(\diff y).
+        \end{equation*}
+\end{itemize}
+
+\noindent \textbf{Gloal or Local}
+Let $X_0 = x \in (l ,r)$ be \textit{deterministic} and let $\tau = \inf\{t\geq 0; X_t \notin I\}$ then \begin{equation*}
+    \prob(\tau = \infty) \quad \text{iff} \quad v (l_+) = v(r_-) = \infty,
+\end{equation*} otherwise the explosion time is finite $\prob(\tau = \infty) < 1$.
+
+\newpage 
+Optimal stopping problem, Tut9 Q3 or Tut 8 Q3, 
+
+
+
+(Ornstein–Uhlenbeck process)
+If $G$ function is deterministic (independent of $X$ process), the SDE can be reduced to ODE with finite variation. $0\leq t\leq T$, $A,B$ being matrix.
+\begin{equation*}
+    \begin{cases}
+    \diff X_t = A X_t(t,X_t) \diff t + B \diff W_t,\\
+    x_0= x \in \R^d &, W_t\in \R^d.
+    \end{cases}
+\end{equation*}
+
+\begin{align*}
+    X_t = x + \int_0^t A X_s \diff s+ B W_t \implies \frac{\diff Y_t}{\diff t} = x + A Y_t+ B W_t,
+\end{align*} with $Y_t = \int_0^t X_s \diff s$ generates the solution.
+\begin{equation*}
+    Y_t = \int_0^t e^{(t-s)A} (x+ BW_s) \diff s.
+\end{equation*}
+Substitute back and use \ito formula, blablabla\footnote{See week6 lec1 40min}, at the end of the day you will find
+\begin{equation*}
+    X_t = e^{tA}x + \int_0^t e^{(t-s)A}B \diff W_s.
+\end{equation*}
+Then the directional derivative $\eta_t = e^{tA}$ is obvious. Moreover
+\begin{equation*}
+    X_t \sim N(e^{tA}x, \int_0^t e^{sA} BB^* e^{sA^*} \diff s).
+\end{equation*}
+If the covariance matrix has positive determinant, $X_t$ has density. And the covariance matrix can be calculated s.t.
+\begin{align*}
+    Q_t =& \E(X_t - e^{tA}x)(X_t - e^{tA})^*.
+\end{align*}
+
+\newpage
+SDE problem
+
+\begin{equation*}
+    \diff X_t = -a X_t \diff t + \sigma \diff W_t.
+\end{equation*}
+Existence and uniqueness is immediate, both coefficients are lipschitz. Solution is again easy, this is \ref{example: OUprocess} process. See W9 Q4. and for time change please reference \ref{Thm: time_change}.
+
+\vspace{2cm}
+\begin{equation*}
+    \diff X_t = X_t^2 \diff t + \sigma \diff W_t.
+\end{equation*}
+All polynomials are locally lipschitz, thus existence and uniqueness is guaranteed. See Week 10 Q2.
+
+\vspace{2cm}
+\textbf{If drift is linear, diffusion have following form}
+\begin{equation*}
+    \diff X_t = a X_t \diff t + \sigma \abs{X_t}^\alpha \diff W_t.
+\end{equation*}
+Existence and Uniqueness see W10 L1 page 10 Corollary.
+
+\vspace{2cm}
+\textbf{Vasicek's model}
+\begin{equation*}
+    \diff X_t = (b- a X_t) \diff t + \sigma \sqrt{X_t} \diff W_t.
+\end{equation*}
+Existence and Uniqueness is a special case of previous one. Further discussion at Tut10 Q3
+
+\vspace{2cm}
+\textbf{No drift}
+\begin{equation*}
+    \diff X_t = \sigma \sqrt{X_t} \diff W_t.
+\end{equation*}
+Existence and Uniqueness with local lipschitz condition. Behaviour of $\tau$ is never explode, see W10 L1 page 4.
+
+\newpage 
+Application of multi variable \ito calculus. Tut4 Q6
+
+Regularities of process $X((s,t,\eta))$ with initial conditions at W5 Q2, and $p-$th power is bounded with initial conditions at W5 Q3.  point estimate for X itself and forward time and backward time, at W5 L1 page 20. see section \ref{Sec: prior_estimate}.=
+
+Optimal stopping problem, see W9 Q3 or W8 Q3 (with solution) or W8 L2 at the end, there is an example.
+
+
+Directional derivative problem (also see W7 Q1) and section \ref{Thm: directional} for theorem.
+    
+if diffusion is independent of $X_t$ then it is additive noise, see W6 L1 page 2 example
+
+\begin{equation*}
+    \sup_{t\leq T} \E\abs{\eta_t^h}^4 \leq C_T \abs{h}^4,
+\end{equation*}
+at W6 L1 page 5.
+
+Also it proves that $\E\abs{X_t}^{2m} \leq \E\int_0^T \norm{F_t}^2 \diff t$ with stopping time at W6 L1 page 5.
+
+Density problem (Adjoint operator) see W8 Q1.
+
+\ito integral and inequality problem
+
+Absolutely value equal to one problem 
+
+Girsanov question 
+\begin{itemize}
+    \item proof martingale, W8 end.
+    \item inequality
+\end{itemize}
+\vspace{2cm}
+\textbf{SDE problem}
+\begin{itemize}
+    \item Analyse solution of SDE like expectation and stuff, see W11 Q3 for full discussion, also multi variable \ito formula.
+    \item Gradient system W11 Q4 (Girsanov).
+    \item Proof determinant is greater than 0 problem (density exist) W12 Q2.
+\end{itemize}
+
+Construction of solution (locally lipschitz +linear growth rate) see W9 L2 page 15. also at W13 L2 page 13.
+
+\newpage
+Forward and Backward derivative of $\varphi$ W7 L1 page 3. Backward PDE see W7 L1 page 4.
+
+Estimate $u_x$ is REL equation at W7 L1 page 16.
+
+equivalent condition of $\qvar{A x,x}{} \leq \lambda \abs{x}^2$ see W10 L2 page 20.
+
+Construction of invariant measure also at end of W10 L2.
+
+Invariant measure problem example of using that theorem W11 L1. proof is also here.
+
+Application of Lyapunov function at W11 L2 page 12, is invariant measure of \textbf{gradient system }.
+
+Irreducibility can be shown by Girsanov, change it to BM that is irreducible and then convert back, see W12 L2 page 3.
+
+There are some theorems also.
+
+strong feller need density continuous and bounded W12 L2 page 18, some property of strong feller see W13 L1
+
+density of invariant measure see W13 L1 page 18, for dimension one we have explicit formula at W13 L1.
+

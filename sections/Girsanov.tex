@@ -1,0 +1,92 @@
+\subsection{Girsanov theorem}
+Next we study the change of probability measure, the theorem is called Girsanov theorem. \footnote{For more reference, see MATH4511 course notes page 37}
+
+Let $\prob, \Q$ be probability measure on $(\Omega, \F)$ 
+\begin{dfn}
+    $\Q$ is absolutely continuous w.r.t $\prob$ or measure $\Q$ is dominated by $\prob$ if:
+    \begin{equation*}
+        \forall A\in\F \quad \prob(A)=  0 \implies \Q(A) = 0.
+    \end{equation*}
+    Denote as $\Q\ll\prob$
+\end{dfn}
+$\prob$ and $\Q$ are equivalent $\prob \sim \Q$ if: $\prob \ll \Q$ and $\Q \ll \prob$.
+
+\begin{thm}[Radon-Nikodym derivative]
+
+$\Q\ll\prob$ iff there exists a r.v. $f\geq 0$, $\E^\prob[f] = 1$
+\begin{equation*}
+    \Q(A) = \E[f\I{A}].
+\end{equation*}
+And we denote $f$ as RN-density with notation $\frac{\diff \Q}{\diff \prob} = f$.
+\end{thm}
+
+We can also apply the idea to conditional probability measure. Let $(\Omega, \F, (\F_t))$ and $\prob|\F_t$ as probability measure of $\prob$ on sigma algebra $\F_t$ then 
+\begin{equation*}
+    f_t = \E[f|\F_t],
+\end{equation*} with notation $\frac{\diff \Q}{\diff \prob}|\F_t = f_t$.
+
+\begin{cor}
+$(f_t, \F_t)$ is martingale.
+\end{cor}
+
+\vspace{2cm}
+
+\textbf{Abstract Bayes Formula}
+Let $(\Omega, \F)$ be measurable space, $\Q, \prob$ be probability measure with dominates relationship $\frac{\diff \Q}{\diff \prob} = \eta$. With $\setg \subset \F$, $X$ be a r.v. s.t. $\E^\prob \abs{X} < \infty$, then
+\begin{equation*}
+    \E^\Q(X|\setg) = \frac{\E^\prob (X\eta |\setg)}{\E^\prob (\eta|\setg)}.
+\end{equation*}
+\pf For detailed proof see \footnote{W7 L2}.
+
+Again, for conditional probability measure s.t. on probability space $(\Omega, \F, (\F_t))$ we have
+
+$(X_t, \F_t)$ is a $\Q-$martingale iff $(X_t\eta_t, \F_t)$ is a $\prob-$martingale.
+
+\begin{dfn}[Doléans-Dade exponential]
+
+Let $(\gamma_t, \F_t)$ be progressively measurable process with $\int_0^T \abs{\gamma_t}^2 \diff t < \infty$ a.s. and $(W_t ,\F_t)$ be $d-$ dimensional BM. then
+\begin{equation*}
+    \varepsilon_t(\gamma) := \exp\left\{\int_0^t \qvar{\gamma_s,\diff W_s}{} - \frac{1}{2}\int_0^t \abs{\gamma_s}^2 \diff s \right\}.
+\end{equation*}
+Then by \ito formula \begin{equation*}
+    \begin{cases}
+    \diff \varepsilon_t(\gamma) = \varepsilon_t(\gamma) \qvar{\gamma_t,\diff W_t}{}, \\
+    \varepsilon_0(\gamma) = 1.
+    \end{cases}
+\end{equation*}
+\end{dfn}
+Notice this is non-negative and local-martingale. Then it is supermartingale by theorem.
+
+\begin{thm}{(Girsanov Theorem)}
+
+Let $(\gamma_t, \F_t)$ be given and $\int_0^T \abs{\gamma_t}^2 \diff t < \infty$. $W_t$ be BM under $\prob$, Assume $\E[\varepsilon_T(\gamma)] = 1$ Define 
+\begin{equation*}
+    \frac{\diff \tilde{\prob}}{\diff \prob} := \varepsilon_T(\gamma), \quad \tilde{W}_t := W_t - \int_0^t \gamma_s \diff s.
+\end{equation*}
+Then $(\tilde{W_t}, \F_t)$ is a $\tilde{\prob}-$BM. By previous discussion we also have 
+\begin{equation*}
+    \tilde{\prob} \ll \prob \quad \frac{\diff \tilde{\prob}}{\diff \prob}|\F_t = \varepsilon_t(\gamma).
+\end{equation*}
+\end{thm}
+
+\begin{rem}
+The condition $\E[\varepsilon_T(\gamma)] = 1$ is crucial in order to make the new measure $\tilde{\prob}$ is well-defined probability measure. To check this, we provide two sufficient conditions:
+\begin{itemize}
+    \item \textbf{(Novikov)} If 
+    \begin{equation*}
+        \E\exp(\frac{1}{2}\int_0^T \abs{\gamma_s}^2 \diff s) < \infty.
+    \end{equation*}
+    \item \textbf{(Gaussian process)} If $(\gamma_t)$ is a Gaussian process then 
+    \begin{equation*}
+        \int_0^T \abs{\gamma_t}^2 \diff t < \infty 	\Leftrightarrow \E \int_0^T \abs{\gamma_t}^2 \diff t < \infty.
+    \end{equation*}
+\end{itemize}
+\end{rem}
+
+\pf 
+Show that $(\tilde{W_t}, \F_t)$ is indeed a Brownian motion 
+\begin{itemize}
+    \item Show that $\tilde{W_t}$ is a continuous local martingale under $\tilde{\prob}$. Recall the lemma, $(\tilde{W}_t)$ is a local martingale under $\tilde{\prob}$ iff $(\tilde{W}_t \eta_t)$ is local martingale under $\prob$.
+    \item Show that $\qvar{\tilde{W}^i, \tilde{W}^j}{t} = \delta_{i,j}t ,\quad \forall i,j\leq d$.
+\end{itemize}
+Then by Levy theorem we have desired result.

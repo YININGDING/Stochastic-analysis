@@ -1,0 +1,465 @@
+\section{\ito integral}
+\subsection{Motivation}
+Why we even consider \ito integral? Consider the following dynamics of process $X_t$,
+\begin{equation*}
+    \frac{\diff X_t}{\diff t} = F(X_t) + \sigma(X_t) \xi_t,
+\end{equation*}where $\xi_t$ represents the noise/randomness. 
+
+Engineer and physicist want the noises which are not correlated and have desired variance s.t. $\forall s\neq t, \E(\xi_s \xi_t) = 0, \E \xi_t^2 = 1$.
+
+\begin{center}
+    \textbf{It can be shown that, $\xi_t$ does not exist as a function. }
+\end{center}
+
+We then try to find next best solution: Brownian motion as process $u < v < s < t$,
+\begin{equation*}
+    \E\left( \frac{W_t - W_s}{t-s} \frac{W_v - W_u}{v-u}\right) = 0 \to \E(W_s', W_v') \text{ if we let }u\rightarrow v, t\rightarrow s.
+\end{equation*} 
+It is then suggests we take the noise as derivative of Brownian motion, $\xi_t = W'_t$, \textbf{But} $W_t$ is nowhere differentiable. Then \ito consider the integral form of above dynamics
+\begin{equation*}
+    X_t = X_0 + \int_0^t F(X_s) \diff s + \int_0^t \sigma(X_s) \xi_s \diff s
+\end{equation*}
+then consider "$\xi_s \diff s = W_t' \diff s = \diff W_s$". The question is does this notation makes sense at all to write 
+\begin{equation*}
+    X_t = X_0 + \int_0^t F(X_s) \diff s + \boxed{\int_0^t \sigma(X_s) \diff W_s}.
+\end{equation*}
+
+It turns out later this notation does makes sense and it is then called the \ito integral.
+\newpage
+\subsection{Construction of \ito integral}
+Similar to measure theory, let's start with elementary process in the space $\epsilon_T = \varepsilon(0,T)$.
+
+\begin{rem}
+Here, $\epsilon_T$ is vector space.
+\end{rem}
+
+\begin{dfn}
+Let $\pi$ be the partition, $\abs{\pi}$ denote the maximum mesh, and $X_i\in\F_t$, $X_t \in \epsilon_t$ if 
+\begin{equation*}
+    X_t = X_0 + \bigs{i}X_{t_{i-1}}\I{(t_{i-1}, t_i]}(t).
+\end{equation*}
+\end{dfn}
+
+\begin{dfn}
+We define the norm for the elementary process as follows
+\begin{equation*}
+    \norm{X}^2 = \E\int_0^T \abs{X_t}^2 \diff t.
+\end{equation*}
+\end{dfn}
+
+Next, we extend our process to more general process with completion with respect to the norm.
+
+\begin{dfn}
+$\lp{2}(0,T)$, the space of all process s.t.
+\begin{equation*}
+    \norm{X_t - X_t^n}_{\lp{2}} \xrightarrow{n\rightarrow \infty} 0
+\end{equation*} ,where $X_n \in \epsilon_T$.
+\end{dfn}
+
+\begin{dfn}{The inner product of process in $\lp{2}(0,T)$ space}
+\begin{equation*}
+    \cvar{X}{Y} := \E\left[ \int_0^T X_tY_t \diff t \right].
+\end{equation*}
+\end{dfn}
+
+\begin{rem}
+All process in $\lp{2}$ is progressively measurable, since simple process is left continuous and adapted. Fact from measure theory: limit of measurable function is still measurable. 
+\end{rem}
+
+\subsection{\ito integral}
+\textbf{Step1.} Let $X\in\epsilon_T$ and define \ito integral.
+\begin{equation*}
+    I_T(x) =  X_0 + \bigs{i}X_{t_{i-1}}(W_{t_{i-1}} - W_{t_i}) = \int_0^T X_s \diff W_s.
+\end{equation*}
+
+\begin{lem}For simple process:
+\begin{itemize}
+    \item $\E I_T(X) = 0$.
+    \item \ito isometry, $\E\abs{I_T(X)}^2 = \norm{X}^2$ (: random variable and process).
+    \item Linearity, $I_T(aX+bY) = aI_T(X) + bI_T(Y)$.
+\end{itemize}
+\end{lem}
+\textbf{Step2.} Let $X_t\in \lp{2}(0,T)$.
+
+Fact: there exists a sequence of process $X_n\in \epsilon_T$ such that $X^n \xrightarrow{\lp{2} }X$, then by Cauchy sequence we have $X_n, X_m$ two elementary process s.t. $\E\int_0^T \abs{X_t^n - X_t^m}^2 \diff t \xrightarrow{n,m\rightarrow \infty} 0$, then
+\begin{align*}
+    \E\norm{I_T(X^n) - I_T(X^m)}^2 &= \E\norm{I_T(X^n- X^m)}^2 = \norm{X^n- X^m} = \E\int_0^T \abs{X_t^n - X_t^m}^2 \diff t \xrightarrow{n,m\rightarrow \infty} 0 
+\end{align*} ,that is,
+\begin{equation*}
+     I_T(X^n) \xrightarrow{\ls{2}} I_T(X^m).
+\end{equation*}
+Hence, by Cauchy sequence, we have convergence in $\ls{2}$ s.t. $I_T(X) = \biglim{n\rightarrow \infty} I_T(X^n)$. Now we extended our definition from elementary space to $\lp{2}$.
+
+\begin{rem}
+The convergence is not in a.s. sense but only in $\ls{2}$. That is, path-wise convergence
+\begin{equation*}
+    I_T(X^n)(\omega) \rightarrow I_T(X)(\omega), \forall \omega \in \Omega
+\end{equation*} is \textcolor{red}{False}.
+\end{rem}
+
+\begin{rem}{(Difference with Riemann integral)}
+
+In discretizing the general function, Riemann integral allows for arbitrary point in the target interval, but \ito integral is fixed at the first point. otherwise:
+\begin{itemize}
+    \item{\ito convention} 
+    \begin{equation*}
+        \bigs{} W_{t_{i-1}}(W_{t_{i}}-W_{t_{i-1}}) \xrightarrow{\ls{2}} \frac{W_T^2 - T}{2}.
+    \end{equation*}
+    \item{Backward \ito integral convention}
+    \begin{equation*}
+        \bigs{} W_{t_{i}}(W_{t_{i}}-W_{t_{i-1}}) \xrightarrow{\ls{2}} \frac{W_T^2 + T}{2}.
+    \end{equation*} 
+    \item{Stratonovich integral convention}
+    \begin{equation*}
+        \bigs{} W_{\frac{t_{i-1}+t_i}{2}}(W_{t_{i}}-W_{t_{i-1}}) \xrightarrow{\ls{2}} \frac{W_T^2}{2}.
+    \end{equation*} 
+\end{itemize}
+\end{rem}
+
+\begin{lem}{(Linearity of \ito integral)}
+
+Let $0< t < u \leq T$ then
+\begin{equation*}
+    \int_0^t X_s \diff W_s +\int_t^u X_s \diff W_s = \int_0^u X_s \diff W_s.
+\end{equation*}
+\end{lem}
+\pf Trivial for elementary process, next we need to take limit from elementary processes to $\lp{2}$ processes. Let $X \in \lp{2}, \exists X^n \in \epsilon_T$ s.t. $\norm{X^n - X} \rightarrow 0$.
+
+\begin{equation*}
+    \int_0^t X_s \diff W_s = \int_0^T X_s \I{(0,t)}(s) \diff W_s.
+\end{equation*}
+Since $X \I{(0,t)}\in \lp{2}, X^n\I{(0,t)} \in \epsilon_T$,
+\begin{equation*}
+    \norm{\I{(0,t)}(X^n-X)} \leq \norm{X^n-X} \rightarrow 0.
+\end{equation*}
+By utilizing \ito isometry
+\begin{align*}
+    &\int_0^T X_s^n \I{(0,t)}(s) \diff W_s \xrightarrow{\ls{2}} \int_0^T X_s \I{(0,t)}(s) \diff W_s=\int_0^t X_s \diff W_s.
+\end{align*}
+\qed
+
+\begin{lem}{Martingale property}
+Let $X\in \lp{2}(0,T)$ then $I_t(X), t\leq T$ is a martingale.
+\end{lem}
+
+\pf Start with elementary process then we take limit. 
+
+\subsection{Extend the class of \ito integral to local martingale}
+
+New we extend our process by introducing stopping time, see chapter \ref{Stopping} for definition. We will construct such process from scratch and give the formal definition later.
+
+\begin{dfn}
+Let $X\in \lc(T)$ be progressively measurable with weaker condition 
+\begin{equation*}
+    \prob\left(\int_0^T X_t^2 \diff t < \infty\right) = 1.
+\end{equation*}
+\end{dfn}
+
+It turns out this process can also be defined but with extra consideration by introducing stopping time
+\begin{equation*}
+    \tau_n = \inf \{t\leq T, \int_0^t X_s^2 \diff s \geq n\}.
+\end{equation*}
+
+We have following intuitive properties, $\tau_n \leq T, \tau_n \leq \tau_{n+1}$, Then we could define $\tau := \lim \tau_n \leq T$.
+
+\textbf{Claim: $\tau = T$ in a.s. sense.}
+
+Let $\omega\in\Omega$ be arbitrary. the integral will be finite integral which is always bounded, we could choose such $n$, the corresponding $\tau_n = T$ then we have $\tau = T$.
+
+\textbf{Consider this process $X_t^n := X_t\I{[0,\tau_n]}(t)$} then $X_t^n \in \lp{2}$ since
+\begin{equation*}
+     \E\int_0^T \abs{X_t^n} \diff t = \E\int_0^{\tau_n} \abs{X_t} \diff t \leq n < \infty.
+\end{equation*} 
+Now it is well defined, also notice $X_t^{n+1} = X_t^n, \forall t \leq \tau_n$. Finally we could define \ito integral for local process $X$,
+\begin{equation*}
+    I_t(X):= I_t(X^n) \text{for } t\leq \tau_n.
+\end{equation*}
+Since $\tau_n \uparrow T$ and for $t\leq \tau_n$, they will coincide to the same value.
+
+\begin{prop}
+$t \to I_t(X)$ has continuous modification by Kolmorgrov test.
+\end{prop}
+
+\begin{dfn}(Local martingale)
+
+Let $(M_t, \F_t)$ be adapted process, assume there exists a sequence of stopping time $\tau_n \uparrow T$ s.t. 
+\begin{equation*}
+    M_{\tau_n \land t} = M_t^{\tau_n}, \forall n
+\end{equation*} is martingale.
+\end{dfn}
+
+\begin{rem}
+Any martingale is local martingale, we could simply take $\tau_n = T$
+\end{rem}
+
+\begin{thm}
+Let $(M_t, \F_t)$ be continuous non-negative Local martingale then $(M_t, \F_t)$ is a supermartingale.
+\end{thm}
+\pf Since $(M_t, \F_t)$ is Local martingale, then $\exists \tau_n \uparrow \tau$ such that,
+\begin{equation*}
+    \E\abs{M_t} = \E [M_t] = \E \lim_{n\rightarrow \infty} M_{\tau_n \land t} \leq \linf{n\rightarrow \infty} \E [M_{\tau_n \land t}] = \linf{n\rightarrow \infty} \E [M_0 ]< \infty,
+\end{equation*}
+then by Fatou's lemma and conditional Fatou's lemma,
+\begin{equation*}
+    \E [M_t|\F_s] = \E \left(\lim_{n\rightarrow \infty} M_{\tau_n \land t}|\F_s\right) \leq \lim_{n\rightarrow \infty} \E \left( M_{\tau_n \land t}|\F_s\right) = M_s.
+\end{equation*}
+\qed
+
+
+\begin{thm}
+if the process $M_t$ can be expressed as $M_t = \int_0^t X_s \diff W_s$ and $X\in \lp{2}, t\leq T$ then 
+\begin{equation*}
+    \qvar{M}{T} = \int_0^T X_t^2 \diff t.
+\end{equation*}
+\end{thm}
+
+Recall for Brownian motion we have $\qvar{W}{t} = t, M_t =  W_t^2 - \qvar{W}{t}$ is then martingale, we may generalize this idea to local martingale.
+
+\begin{thm}
+Let $(M_t, \F_t)$ be continuous Local martingale with $\sup_t \E\left(M_t^{\tau_n}\right)^2<\infty$ then $M_t^2 - \qvar{M}{t}$ is again martingale.
+\end{thm}
+
+\begin{rem}
+The process in this form $\int_0^T f \diff W_t$ not necessarily is a local martingale, since the integrand $f$ might depends on terminal condition. If not, we have a local martingale. A counter-example will be $\int_0^t t \diff W_s = t W_t$ which is not a martingale.
+\end{rem}
+
+\subsection{Semimartingale}
+\begin{thm}{(Doob-Meyer decomposition)}
+
+Let $(M_t, \F_t)$ be a continuous local martingale, then there exists a unique increasing process $(A_t)$ such that \begin{equation*}
+    M_t^2 - A_t
+\end{equation*} is a continuous local martingale, we also know $A_t = \qvar{M}{t}$.
+\end{thm}
+
+\begin{dfn}
+Let probability space be standard with natural filtration, then $(X_t, \F_t)$ is semimartingale if it has following decomposition:
+
+\begin{equation*}
+    X_t = X_0 + A_t + M_t \quad A_t \in BV(0,T), M_t \in \lc(0,T),
+\end{equation*} and we further assume $A_t = \int_0^t a_s \diff s$.
+\end{dfn}
+
+\begin{lem}
+The decomposition is unique up to a version.
+\end{lem}
+
+\pf Assume $\exists M_t, \hat{M_t}, A_t, \hat{A_t}$ and we take the difference, then use local martingale with bounded variations are 0 and martingale property plus Fatou's lemma.
+
+\begin{lem} $\qvar{X}{T} = \qvar{M}{T}$.
+\end{lem}
+
+\pf This can be easily proved by Cauchy-Schwartz inequality, the key part here is the cross-variation term
+\begin{align*}
+    \biglim{\abs{\pi_n}\rightarrow 0}  V_\pi^n (A, M) &= \biglim{\abs{\pi_n}\rightarrow 0} \bigs{i}(A_{t_i} - A_{t_{i-1}})(M_{t_i} - M_{t_{i-1}}) \\
+    &\leq \biglim{\abs{\pi_n}\rightarrow 0} \sqrt{\bigs{i}(A_{t_i} - A_{t_{i-1}})^2}\sqrt{\bigs{i}(M_{t_i} - M_{t_{i-1}})^2} \rightarrow 0.
+\end{align*}
+
+The first term vanishes because the quadratic variation of the bounded variation process is 0, and the second term will converge.
+
+\begin{thm}{(\ito Lemma 1 dimensional)}
+
+Let $X_t$ be a semimartingale, $f: \R \rightarrow \R, f\in C^2(\R)$ then
+\begin{equation*}
+    \diff f(X_t) = f'(X_t) \diff X_t + \boxed{\frac{1}{2} f''(X_t) \diff \qvar{X}{t}}.
+\end{equation*}
+(Boxed part is \ito correction term).
+\end{thm}
+
+\subsection{Multidimensional case}
+Next, we generalize all the results to multidimensional cases.
+
+\begin{dfn}
+$(M_t, \F_t)$ is a d-dimensional local martingale if $(M_t^i,\F_t), i = 1,2,...,d$ is a local martingale and we denote the relationship by "covariation" matrix. $\qvar{M}{t} = (\qvar{M^i,M^j}{t})$For example standard Brownian motion have covariation matrix $tI$.
+\end{dfn}
+
+\begin{thm}{(Extended Doob-Meyer decomposition)}
+
+The process $\qvar{M^i,M^j}{t}$ is a unique finite variation process s.t. 
+
+\begin{equation*}
+    M_t^1 M_t^2 -\qvar{M^i,M^j}{t}
+\end{equation*} is a local martingale.
+\end{thm}
+
+Next, we define a multidimensional process in the form
+\begin{equation*}
+    \int_0^t F(s) \diff W \in \R^d.
+\end{equation*}
+
+It turns out we need $F(t), d\times d$ matrix with $F_{ij}$ progressively measurable process and 
+\begin{equation*}
+    \bigs{i,j}\int_0^T \abs{F_{i,j}(t)}^2 \diff t = \int_0^T \norm{F(t)}^2 \diff s <\infty  \quad  a.s.
+\end{equation*}
+
+The equality is given by \ito isometry.
+
+By some tedious computation, we may show $\int_0^t F(s) \diff W \in \R^d$ is well defined local martingale. Furthermore, if we have $\E\left(\bigs{i,j}\int_0^T \abs{F_{i,j}(t)}^2 \diff t\right) =\E(\int_0^T \norm{F(t)}^2 \diff s)<\infty$ we will get martingale.
+
+Next, we may define multidimensional semimartingale.
+\begin{dfn}{(multidimensional semimartingale)}
+
+The setting is still standard.
+\begin{equation*}
+    X_t = X_0 + \int_0^t a_s \diff s + \int_0^t F_s \diff W_s,
+\end{equation*}
+or, in differential form
+\begin{equation*}
+    \diff X_t =  F_t \diff t + G_t \diff W_t. 
+\end{equation*}
+
+Let's specify the dimension 
+\begin{equation*}
+    W_t, F_t, X_t \in \R^d, G_t d\times d \text{ matrix be progressively measurable}
+\end{equation*} plus integrability condition $\int_0^T \norm{G_t}^2 \diff t < \infty, \int_0^T \abs{F_t} \diff t < \infty$.
+\end{dfn}
+
+Let's introduce some notations, gradient: $Df(x) = \nabla f(x) = (\frac{\partial f}{\partial x_k})$, Hessian matrix: $D^2 f(x) = H_f(x) (\frac{\partial^2 f}{\partial x_k \partial x_j})$ and inner product $\inner{u}{v}$, asterisk stands for transpose matrix.
+
+\begin{thm}{(\ito Lemma d-dimensional)}
+
+Let $X_t = (X_t^1, ... X_t^d)$ be a semimartingale, $f: \R^d \rightarrow \R, f\in C^2(\R^d)$ then
+\begin{align*}
+    \diff f(X_t) &= \inner{\nabla f(X_t)}{\diff X_t} + \frac{1}{2} (\diff X_t)^* H_f(X_t) \diff X_t \\
+    &= \inner{\nabla f(X_t)}{\diff X_t} + \frac{1}{2} Tr\left(H_f(X_t)\diff \qvar{X}{t} \right) \\
+    &= \inner{\nabla f(X_t)}{\diff X_t} + \frac{1}{2}Tr\left(G_t^* H_f(X_t)G_t \right) dt \\
+    &= \left(\nabla f(X_t)^* G_t + \frac{1}{2}Tr(G_t^* H_f(X_t)G_t )\right)\diff t + \nabla f(X_t)^* G_s \diff W_t,
+\end{align*}
+or, in expanded form
+\begin{equation*}
+    \diff f(X_t) = \bigs{i=1}^d  \frac{\partial f}{\partial x_i} \diff X_t^i + \boxed{\frac{1}{2} \bigs{i,j} \frac{\partial^2 f}{\partial x_i\partial x_j} \diff \qvar{X^i,X^j}{t}}
+\end{equation*}
+(Boxed part is \ito correction term.)
+\end{thm}
+
+\begin{cor}{(When a process has bounded variation)}
+
+Assume we have only two processes $A_t = A_0 + \int_0^t a_s \diff s$ and $X_t$ is a semimartingale. Let $f: \R^2 \rightarrow \R, f\in C^{1,2}(\R^2).$
+
+\end{cor}
+\pf By the previous theorem 
+\begin{align*}
+    df(A_t, X_t) &= \frac{\partial f}{\partial a} \diff A_t + \frac{\partial f}{\partial x} \diff X_t + \frac{1}{2} \frac{\partial^2 f}{\partial x^2} \diff \qvar{X}{t} + \boxed{\frac{1}{2} \frac{\partial^2 f}{\partial a^2} \diff \qvar{A}{t}+ \frac{\partial^2 f}{\partial x\partial a} \diff \qvar{X,A}{t}} \\
+    &= \frac{\partial f}{\partial a} \diff A_t + \frac{\partial f}{\partial x} \diff X_t + \frac{1}{2} \frac{\partial^2 f}{\partial x^2} \diff \qvar{X}{t}.
+\end{align*}
+
+The boxed part is zero since the quadratic variation of the bounded variational process is equal to zero and the cross term equal to zero as shown above.
+
+\begin{rem}
+In financial math, we sometimes consider how to deal with a non-differentiable process such as call options
+\begin{equation*}
+    (X_t - K)^+.
+\end{equation*} which can not be studied in our case thus we introduce next subsection.
+\end{rem}
+
+
+\subsection{Extended \ito lemma}
+
+We discussed \ito lemma when $f\in C^2(\R)$, but there are functions that are not differentiable but with practical meaning, for example, the call option $(X-k)^+$ thus we introduce the \itm formula. Next, we drop the condition of twice differentiability.
+
+\begin{dfn}{(Left limits)} 
+
+\begin{equation*}
+    f_L' = \lim_{h>0, h\rightarrow 0} \frac{f(x) - f(x-h)}{h}
+\end{equation*}
+\end{dfn}
+
+\begin{thm}
+If $f: \R \rightarrow \R$ is convex, then $f_L'$ exists for all $x$.
+\end{thm}
+
+An immediate observation is that the theorem also holds for concave functions. Also for linear combinations of concave and convex functions.
+
+\textcolor{red}{Now we "give" meaning of the first derivative, what about the second derivative?}
+
+\begin{thm}
+The second derivative of a convex function is a positive measure.
+\end{thm}
+
+\begin{example}
+Let's start with the simplest function $f(x) = \abs{x}$.
+\begin{equation*}
+    f_L' = \begin{cases}
+    1 \quad x>0 \\
+    -1 \quad x \leq 0.
+    \end{cases}
+\end{equation*}Let's define the function with integration by parts s.t.
+\begin{equation*}
+    \int_{-\infty}^\infty  f''(x)\varphi(x) \diff x = -\int_{-\infty}^\infty f'(x)\varphi'(x) \diff x.
+\end{equation*}
+Provided that $\varphi \in C_0^\infty(\R), \varphi^{n}(x)$ continuous and vanishes outside bounded intervals.
+\begin{align*}
+    \int_{-\infty}^\infty  f''(x)\varphi(x) \diff x &= -\int_{-\infty}^\infty f'(x)\varphi'(x) \diff x\\
+    &= \int_{-\infty}^0 \varphi'(x) \diff x-\int_{0}^\infty  \varphi'(x) \diff x\\
+    &= \int_{-\infty}^\infty  2\varphi'(x) \diff x \\
+    &= 2\phi(0) = \int_{-\infty}^\infty  2\varphi(x) \delta_0(\diff x).
+\end{align*}
+That is, we may represent $f'' = 2\delta_0$ which is indeed a positive measure.
+\end{example}
+
+Also, since the Brownian motion can be scaled over time "$(B_t = cW_{\frac{t}{c^2}})$" is still Brownian motion, which is kind of like scaling the whole BM into a small interval, as small as we want. That is, it can be so unstable in any length interval, we have the following facts, first, let
+\begin{equation*}
+    \tau^+ = \inf{\{t\geq 0, W_t > 0\}}, \tau^- = \inf{\{t\geq 0, W_t < 0\}}, \tau  = \inf \{t > 0, W_t = 0\}.
+\end{equation*} we have:
+\begin{align*}
+    \{W_t > 0\}\subset \{\tau^+ \leq t\} &\implies \prob(\tau^+ \leq t) \geq \prob(W_t > 0) = \frac{1}{2},
+\end{align*}
+and,
+\begin{align*}
+    \prob(\tau^+ = 0) &= \biglim{t\rightarrow 0} \prob(\tau^+ \leq t) \geq \prob(W_t > 0) =\frac{1}{2}.
+\end{align*}
+By 0-1 law, we have $\prob(\tau^+ = 0) = 1$, similarly $\prob(\tau^- = 0) = 1$, hence, $\prob(\tau = 0) = 1$.
+
+\begin{dfn}{(Local time)} 
+
+Let $X_t$ be continuous semimartingale, $a\in \R$,
+\begin{equation*}
+    L_t^a = \lim_{\epsilon\rightarrow 0} \frac{1}{2\epsilon} \int_0^t \I{(\abs{X_s -a}< \epsilon)} \diff \qvar{X}{s}.
+\end{equation*}
+\end{dfn}
+
+Let's start with the simplest example, Brownian motion around $0$.
+
+\begin{example}
+Let $X_t = W_t, \diff \qvar{W}{t}= \diff t$,
+\begin{equation*}
+    L_t^0 = \lim_{\epsilon\rightarrow 0} \frac{1}{2\epsilon} \int_0^t \I{(-\epsilon <W_t<\epsilon)} \diff s.
+\end{equation*}
+
+\textbf{Intuition:} The second part $\int_0^t \I{(-\epsilon <W_t<\epsilon)} \diff s$ is the total time spent inside the stripe $[-\epsilon, \epsilon]$ then divided by length of the stripe $2\epsilon $ which can be interpreted as "mean time of $W_t$" spent at $-\epsilon, \epsilon$.
+\end{example}
+
+\begin{rem}
+We have a nontrivial value here which is bizarre since $\prob(W_t = a) = 0 \quad \forall a\in \R$.
+\end{rem}
+
+\begin{thm}{(\itm Formula)} 
+
+Let $f$ be a difference of two convex functions and $(X_t, \F_t)$ is a continuous semimartingale then
+\begin{equation*}
+    f(X_t) = f(X_0) + \int_0^t f_L'(X_s) \diff X_s + \frac{1}{2} \int_\R L_t^a(X) \mu(\diff a).
+\end{equation*}
+\end{thm}
+
+\begin{example}
+Let's consider $f = \abs{x}, \mu = 2\delta_0$,
+\begin{align*}
+    \abs{X_t} &= \abs{X_0} + \int_0^t f_L'(X_s) \diff X_s + \frac{1}{2} \int_\R L_t^a(X) 2\delta_0(\diff a) \\
+    &= f(X_0) + \int_0^t f_L'(X_s) \diff X_s +  L_t^0(X).
+\end{align*}
+\end{example}
+
+\begin{rem}
+This gives semimartingale decomposition, the first part is clear, and the second is also clear as long as one notices local time is monotonic in $t$ which implies bounded variation.
+\end{rem}
+
+
+\begin{thm}{Stochastic Fubini theorem}\label{SFT}
+
+Let $a\in [0,A], \forall a, (F_t(a))$ progressively measurable process, $(a,t,\omega)\rightarrow F_t(a,\omega)$ is measurable. Assume that 
+\begin{equation*}
+    \E\int_0^T\int_0^A \abs{F_t(a)^2} \diff a \diff t < \infty,
+\end{equation*} ,then we have
+\begin{equation*}
+    \boxed{\int_0^T\int_0^A F_t(a) \diff a \diff W_t = \int_0^A\int_0^T =F_t(a)\diff W_t \diff a. }
+\end{equation*}
+\end{thm}

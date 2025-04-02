@@ -1,0 +1,50 @@
+\newpage
+
+\section{Stochastic process}
+We assumed the knowledge of probability space and filtration and stuff. We assume all $\sigma$ algebra are complete, that is all subsets of set with measure zero are measurable. We also postulate the assumption of continuity, that is, all the process we considered in this course are continuous (no jumps)
+\begin{equation*}
+    B\in \F \quad or\quad  B\subset A, A\in \F, \prob(A)=0.
+\end{equation*}
+\begin{dfn}
+A stochastic process $Y_t$ is a \textbf{version} if 
+\begin{equation*}
+    \prob(X_t = Y_t) = 1 \quad \forall t.
+\end{equation*}
+
+A stochastic process $Y_t$ is \textbf{indistinguishable} if 
+\begin{equation*}
+    \prob(X_t = Y_t \quad \forall t) = 1.
+\end{equation*}
+\end{dfn}
+\begin{rem}
+
+Notice that, the former one allows for difference on set with measure zero and can be different on path, but indistinguishable is only true if the paths are the same. 
+\end{rem}
+\begin{example}Consider Lebesgue measure on $[0,1]$ and following measurable function
+\begin{equation*}
+    X_t(\omega) = \begin{cases}
+    1\quad t = \omega \\
+    0 \quad t \neq \omega
+    \end{cases}, \qquad Y_t = 0.
+\end{equation*}
+\end{example}
+Then they $X_t$ is a version of $Y_t$ but they are \textbf{NOT} indistinguishable.
+
+\begin{dfn}{(Progressively measurable process)}
+Let $X_t$ defined on $(\Omega, \F, \F_t, \prob)$ be adapted be given $t\leq T$ if \begin{equation*}
+    (s,\omega) \rightarrow X(s,\omega), s\leq t
+\end{equation*} is $\B(0,t) \bigotimes \F_t$ measurable for all $t$ if
+\begin{itemize}
+    \item The process if right-continuous or left-continuous.
+    \item The process has progressively measurable. modification.
+\end{itemize}
+\end{dfn}
+
+{\textbf{Why we need this?}}
+With integrability condition, we may have following benefits
+\begin{itemize}
+    \item $\int_0^t X_s \diff s \in \F_t$ measurable for all $t$.
+    \item Fubini condition is satisfied, $\E \int_0^t X_s \diff s = \int_0^t \E X_s \diff s$, equivalently, $\into \int_0^t X_s \diff s\diff \prob = \int_0^t \into X_s \diff \prob\diff s $.
+\end{itemize}
+\input{sections/stopping_time}
+

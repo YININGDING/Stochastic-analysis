@@ -1,0 +1,118 @@
+\newpage
+Now we will introduce the heart process of \ito calculus or even stochastic analysis: Brownian motion or Wiener process.
+\section{Wiener process/ Brownian motion}
+\subsection{Definition of Brownian motion}
+\begin{dfn}
+On probability space $(\Omega, \F, \prob)$, a stochastic process $(W_t)$ is a Brownian motion or Wiener process if all the following condition holds true
+\begin{itemize}
+    \item $W_0 = 0$,
+    \item $W_t \in \F_t$,
+    \item $s < t, W_t - W_s$ is independent of $\F_s$,
+    \item $W_t - W_s \sim N (0, t-s)$,
+    \item $\prob(\{\omega; t \to W_t(\omega) \text{continuous }\}) = 1$.
+\end{itemize}
+\end{dfn}
+
+
+\begin{dfn} Alternative equivalent definition
+\begin{itemize}
+    \item $W_t$ is Gaussian with $\E(W_t^2) < \infty$,
+    \item $\E W_t = 0$,
+    \item $Cov(W_s, W_t) = min(s,t)$.
+\end{itemize}
+\end{dfn}
+
+\begin{thm}{Wiener 1923} He proved such process exist.
+\end{thm}
+
+\begin{rem}
+Brownian motion has independent increments and continuous path (Unique up to multiplication)
+\end{rem}
+
+\subsection{Proposition of Brownian motion}
+\begin{prop}Properties of Brownian motion
+
+\begin{itemize}
+    \item Independent increments,
+    \item Gaussian,
+    \item $Cov(W_s, W_t) = min(s,t)$,
+    \item Continuous modification (By Kolmogorov test),
+    \item Nowhere differentiable,
+    \item Martingale,
+    \item Markov process, also strong Markov,
+    \item Unbounded variation, but quadratic variation converges in $\ls{2}$.
+\end{itemize}
+\end{prop}
+
+\begin{thm}{(Kolmogorov continuity test)} Let $X_t$ be a stochastic process, s.t. $\exists p > 1, \exists C_T$ s.t.
+\begin{equation*}
+    \E \abs{X_t - X_s}^p \leq  C_T\abs{t-s}^{1+\alpha},
+\end{equation*} for certain $\alpha >0$ and $s,t\leq T$, then $X_t $ has continuous modification.
+\end{thm}
+
+\subsection{Transformation}
+Let $(W_t, \F_t)$ be Brownian motion on probability space then the following are also Brownian motion,
+\begin{itemize}
+    \item $(-W_t, \F_t)$.
+    \item Shifting, fix $s\geq 0$, $(W_{t+s}, \F_{t+s})$ by forgetfulness property of Brownian motion.
+    \item Scaling, fix $c > 0$, $(cW_{\frac{t}{c^2}}, \setg_t)$ where $\setg$ is the natural filtration.
+\end{itemize}
+\href{https://www.randomservices.org/random/brown/Standard.html}{More examples on Brownian motion transformation}.
+
+\subsection{Multidimensional Brownian motion}
+Brownian motion is n-dimensional Brownian motion w.r.t $\F_t$ if $W_t^k, k = 1, ..., n$ be $d$ independent Brownian motions adapted to $\F_t$.
+\begin{dfn}
+$u: \R^d \rightarrow \R^d$ is unitary transformation if $u^T = u^{-1}$.
+\end{dfn}
+Unitary transformation corresponds to a rotation of axes, that is, $\abs{ux} = \abs{x}, x\in \R^d$.
+\begin{thm}{(Invariant to rotation)}
+Let $(W_t, \F_t)$ be Brownian motion on probability space, $u$ be unitary matrix then we define 
+\begin{equation*}
+    B_t := u W_t
+\end{equation*} is again $R^d$ valued Brownian motion.
+\end{thm}
+
+\subsection{Transition semigroup of the process}
+$P_t(\varphi(x)) = \E(\varphi(x + W_t)), \quad \varphi\in C_b(\R^d)$
+
+\begin{equation*}
+    (P_{t+s \varphi})(x) = P_{t+s}\varphi (x) = P_s(P_t\varphi)(x)
+\end{equation*}
+This will be extremely useful later in the chapter of SDE (Stochastic differential equation).
+
+\subsection{Quadratic variation of Brownian motion}
+Notice quadratic variation of Brownian motion denoted as $\qvar{W}{t}$ and converge to $T$ in $\ls{2}$ sense, with proper modification of sequence we can obtain a.s. convergence.
+
+\begin{equation*}
+\cvar{W^i}{W^j} = \delta_{ij} t , \delta_{ij} = \begin{cases}
+0 \quad i\neq j \\
+1 \quad i = j.
+\end{cases}
+\end{equation*}
+
+\begin{thm}
+Let $M_t^{ij} = W_t^i W_t^j - \delta_{ij} t, i,j = 1,...,d$, then \begin{equation*}
+    (M_t^{i,j}, \F_t)
+\end{equation*} is a martingale process.
+\end{thm}
+
+\subsection{Bounded variation (BV) functions}
+\begin{dfn}
+we say $f \in BV(0,T)$ if 
+\begin{equation*}
+    V_\pi^{(1)}(f) = \lim_{\abs{\pi}\rightarrow 0} \bigs{k} \abs{f(t_k) - f(t_{k-1})} \quad \text{ exists.}
+\end{equation*}
+\end{dfn}
+
+\begin{thm}
+Let $f: [0,T] \to \R$ be real valued function, we say it is Bounded variation function if any of the following condtions hold true
+\begin{itemize}
+    \item $f$ is monotone,
+    \item $f$ is inear combinations of Bounded variation functions,
+    \item if $f$ can be expressed as 
+    \begin{equation*}
+        f(t) = f(0) + \int_0^t g(s) \diff s, \int_0^t \abs{g(s)} \diff s <\infty.
+    \end{equation*}
+\end{itemize}
+\end{thm}
+

@@ -1,0 +1,101 @@
+\newpage
+\subsection{Stopping time}\label{Stopping}
+Let $(\Omega, \F, \F_t, \prob)$ be given, A random variable $\tau: \Omega \rightarrow [0,\infty]$ is a stopping time if 
+\begin{equation*}
+    \{\tau \leq t\} \in \F_t, \quad \forall t\leq T.
+\end{equation*}
+\textbf{Idea: At any time, we will know the event happened or not.}
+\begin{thm}
+Let $\F_{t+} = \bigi{\epsilon>0} \F_{t+\epsilon}$. If $\F_t = \F_{t+}$ then $\tau$  is a stopping time iff 
+\begin{equation*}
+    \{\tau < t\} \in \F_t, \quad \forall t\leq T.
+\end{equation*}
+\end{thm}
+Markov/stopping time are both accepted.
+
+\begin{rem} For function $\I{[0, \tau]}(t)$ it is both adapted and progressively measurable.
+\end{rem}
+\begin{example}
+Brownian motion $W_t$.
+\end{example}
+
+\begin{example}
+Let $X_t$ be adapted and continuous and we assume $\F_t = \F_{t+}$. Let $U$ open then $\tau = \inf \{t\geq 0; X_t \in U\}$ is a stopping time. \\
+\pf Given $X_\tau \in U$, by continuity of this process,  $\exists t_n \leq t, X_{t_n} \in U$. Then \begin{equation*}
+    \{\tau < t\} = \bigu{t_n \leq t} \{X_{t_n}\in U\}\in \F_t.
+\end{equation*}
+\qed
+\end{example}
+
+Consider theorem related to local martingale.
+
+If $(M_t, \F_t)$ is a continuous martingale with $\sup_t \E\abs{M_t}^2 < \infty$ then the quadratic variation
+\begin{equation*}
+    \qvar{M}{t} = \biglim{\abs{\pi}\rightarrow 0}\bigs{k} \abs{M_{t_i} - M_{t_{i-1}}}^2
+\end{equation*}
+exists.
+\begin{cor}
+Assume $(M_t, \F_t)$ is continuous local martingale, $\tau_n \uparrow T, (M_t^{\tau_n}, \F)$ square integrable martingale. By previous theorem
+\begin{equation*}
+    \qvar{M^{\tau_n}}{t} \quad \text{exists}.
+\end{equation*}
+Now take $\tau_n \rightarrow T$ we conclude $\qvar{M}{T}$ exists
+\end{cor}
+
+\begin{example}
+Let $M_t = \int_0^t X_s \diff W_s$ with condition $\int_0^T X_s^2 \diff s < \infty$ a.s. then we have
+\begin{align*}
+    \qvar{M}{\tau_n} &= \int_0^t X_s \I{[0,\tau_n]}(s) \diff s = \int_0^{T\land \tau_n} X_s \diff s.
+ \end{align*}
+ As $\tau_n \uparrow T$ we have convergence
+ \begin{equation*}
+     \qvar{M}{T} = \int_0^{T} X_s \diff s <\infty.
+ \end{equation*}
+\end{example}
+
+\begin{thm}{(Strong Markov property)} Let $\tau$ be stopping time with $\prob(\tau < \infty) =1$ Then the new Brownian motion
+\begin{equation*}
+    B_t := W_{t+\tau} - W_\tau \quad t\geq 0,
+\end{equation*} then, $(B_t, \setg_t)$ is a BM independent of $\F_t$\footnote{see definition on 4528 notes} with $\setg$ be defined as natural filtration.
+\end{thm}
+This can be used to deduce that if $(W_t, \F_t)$ be BM and $\tau$ being hitting time $\tau^a = \inf\{t\geq0; W_t = a\}$ then
+\begin{equation*}
+    \prob(\tau \leq t) = 2\prob (W_t \geq a),
+\end{equation*} 
+with density
+\begin{equation*}
+    f_{\tau^a} = \frac{a}{\sqrt{2\pi t^3}}\exp (-\frac{a^2}{2t}),
+\end{equation*} and,
+\begin{equation*}
+    \E[e^{-\lambda \tau^a}] = e^{-a\sqrt{2\lambda}}, \quad \lambda > 0.
+\end{equation*}
+
+We could also study shifted Brownian motion in the sense that take $a >0, m\in \R$ and hitting time
+\begin{equation*}
+    \tau^a = \inf\{t\geq 0; mt + W_t \geq a\}
+\end{equation*}
+Then we can obtain the distribution of $\tau^a$ with its density and 
+\begin{equation*}
+    \prob(\tau^a < \infty) = \begin{cases}
+    1 \quad &ma >0\\
+    e^{2ma} \quad &ma <0
+    \end{cases}
+\end{equation*}
+This is intuitive once you draw the picture.
+
+\begin{thm}[Doob/ Optional Stopping Theorem]
+\label{Doob} Let $(X_n, \F_n)$ be a martingale, $\tau_i, i=1,2$ be stopping times, assume that
+\begin{enumerate}
+    \item $\prob(\tau_1 \leq \tau_2 < \infty) = 1$,
+    \item $\E|X_{\tau_i}| < \infty$,
+    \item $\linf{n\rightarrow \infty} \E[|X_n|\I{\tau_i > n}] = 0, i=1,2$,
+\end{enumerate}then,
+\begin{equation*}
+    \E(X_{\tau_2}|\F_{\tau_1}) = X_{\tau_1}.
+\end{equation*}
+\end{thm}
+\begin{rem}
+If $\tau \leq N$ a.s. (Stopping time is bounded) then optimal stopping theorem applies
+\end{rem}
+Example can be found at \footnote{W8 L2}.
+
