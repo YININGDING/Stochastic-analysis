@@ -6,4 +6,4 @@ This is a course notes from University of Sydney: [MATH4512: Stochastic analysis
 
 By the way, if you are not familiar to GitHub just like me, you can use this link: https://www.overleaf.com/read/tvmdsnbjsbfq, this will redirect you to overleaf and you can directly compile the code and download the PDF file. 
 
-Please feel free to leave any comments and star this project if you find this is helpful ^ ^.Have fun.
+Please feel free to leave any comments and star this project if you find this is helpful ^ ^. I like this unit a lot, I hope you do too.
